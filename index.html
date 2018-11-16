@@ -5,26 +5,16 @@
         <script src="tamplater.js"></script>
     </head>
     <body>
-        <bootstrap_button class = "test" type="submit">
-            Hellow Max
-        </bootstrap_button>
-        <bootstrap_link>
-                Some Another Text
-        </bootstrap_link>
-          
+        <bootstrap_button class="btn btn-default some" type="submit">Max</bootstrap_button>
+
         <script>
             tamplater.addTag(
                 'bootstrap_button',
-                '<button class="btn btn-default" type="submit">' +
-                'Some Text' +
+                '<button class="{{class}}" type="{{type}}">' +
+                '{{html}}' +
                 '</button>'
             );
-            tamplater.addTag(
-                'bootstrap_link',
-                '<a class="btn btn-default" href="#" role="button">' +
-                'Some Another Text' +
-                '</a>'
-            );
+
             tamplater.run();
         </script>        
 

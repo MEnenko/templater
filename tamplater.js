@@ -1,25 +1,38 @@
-function Tamplater(){
+function Tamplater() {
     var bankTag = [];
     var bankTemlate = [];
     this.run = function() {
         
         for (var i = 0; i < bankTag.length; i++) {
             var bootstrap = document.body.querySelector(bankTag[i]);
-            bootstrap.outerHTML = bankTemlate[i];
+            //bootstrap.outerHTML = bankTemlate[i];
+            bootstrap.outerHTML = render(bankTemlate[i], bootstrap)
         } 
-        /*
-        document.body.style.background = '';
-        var bootstrapButton = document.body.querySelector('bootstrap_button');
-        bootstrapButton.remove()
-        //bootstrapButton.outerHTML = '<p>Новый элемент!</p>';
-        var botton = document.createElement('button');
-        botton.setAttribute('class', 'btn btn-default');
-        botton.setAttribute('type', 'submit');
-        botton.innerHTML = "change button";
-        document.body.append(botton);
-        */
     } 
-    this.addTag = function(tag, template){
+    
+    function render(t, element) {
+        var values = t.match(/[^{}]+(?=})/g);
+        var templater = t;
+
+        for (var i = 0; i < values.length; i++) {
+            var strValue, reg;
+
+            if (values[i] == 'class') {
+                strValue = element.getAttribute(values[i]);
+                reg = /{{class}}/g;
+            }else if (values[i] == 'type') {
+                strValue = element.getAttribute(values[i]);
+                reg = /{{type}}/g;
+            }else if (values[i] == 'html') {
+                strValue = element.innerHTML;
+                reg = /{{html}}/g;
+            }
+            templater = templater.replace(reg, strValue);
+        }
+        return templater;
+    }
+    
+    this.addTag = function(tag, template) {
         bankTag.push(tag);
         bankTemlate.push(template);
     }
