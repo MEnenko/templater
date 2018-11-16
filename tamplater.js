@@ -5,18 +5,17 @@ function Tamplater() {
         
         for (var i = 0; i < bankTag.length; i++) {
             var bootstrap = document.body.querySelector(bankTag[i]);
-            //bootstrap.outerHTML = bankTemlate[i];
+
             bootstrap.outerHTML = render(bankTemlate[i], bootstrap)
         } 
     } 
     
-    function render(t, element) {
-        var values = t.match(/[^{}]+(?=})/g);
-        var templater = t;
+    function render(templater, element) {
+        var values = templater.match(/[^{}]+(?=})/g);
 
         for (var i = 0; i < values.length; i++) {
             var strValue, reg;
-
+            
             if (values[i] == 'class') {
                 strValue = element.getAttribute(values[i]);
                 reg = /{{class}}/g;
@@ -36,7 +35,6 @@ function Tamplater() {
         bankTag.push(tag);
         bankTemlate.push(template);
     }
-
 }
 var tamplater = new Tamplater();
 
