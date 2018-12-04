@@ -4,8 +4,10 @@ function Templater() {
 
     this.run = function() {
         for (var key in tags) {
-            var tag = document.body.querySelector(key);
-            tag.outerHTML = render(tag, tags[key])
+            var tagList = document.body.querySelectorAll(key);
+            for (tag of tagList) {
+                tag.outerHTML = render(tag, tags[key]);    
+            }            
         } 
     } 
       
@@ -23,10 +25,7 @@ function Templater() {
             } else if(templat.includes(element)) {
                 valueAttributes = tag.getAttribute(element);
                 templat = templat.replace(reg, valueAttributes);
-            } else {
-                console.los(element);
-            }
-
+            } 
         });        
 
         return templat;
