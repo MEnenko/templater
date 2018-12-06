@@ -2,15 +2,37 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="jquery-3.3.1.min.js"></script>
         <script src="templater.js"></script>
+        
     </head>
     <body>
-        <bootstrap_button class="btn btn-default some " type="submit">Max</bootstrap_button>
-        <bootstrap_button class="btn btn-default some " type="submit">Vova</bootstrap_button>
-        <bootstrap_button class="btn btn-default some " type="submit">Boobs</bootstrap_button>
-        <bootstrap_button class="btn btn-default some " type="submit">Mango</bootstrap_button>
-        
-        <script>
+        <section id="bootstrap-templates">            
+            <button type="submit" class="some-class">
+                Bootstrap Button 3
+            </button>
+        </section>
+        <section id="foundation-templates">
+            <button type="submit" class="some-class">
+              Foundation Button
+            </button>
+        </section>
+
+        <script>                  
+            $('#bootstrap-templates').templater({
+                tags: {
+                    'button': '<button class="btn btn-default {{class}}" type="{{type}}">{{html}}</button>'
+                }
+            });      
+            $('#foundation-templates').templater({
+                tags: {
+                    'button': '<button class="button {{class}}" type="{{type}}">{{html}}</button>'
+                }
+            });  
+        </script>
+                 
+        <!-- <script>
+
             templater.addTag(
                 'bootstrap_button',
                 '<button class="{{class}}" type="{{type}}">' +
@@ -19,7 +41,7 @@
             );
 
             templater.run();
-        </script>        
+        </script>         -->
 
     </body>
 </html>

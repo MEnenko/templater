@@ -1,7 +1,40 @@
+$.fn.templater = function(options) {
+    var tags = {};               
+    
+    $.extend(tags, options.tags);            
+   
+    for(var key in tags){                     
+        $(this.children()).each(function(){
+            $(this).replaceWith(render($(this) ,tags[key]))
+        });
+    }                
+}                                       
+
+function render(tag, templat) {
+    var attributes = templat.match(/[^{}]+(?=})/g);
+
+    attributes.forEach(function(element) {
+        var valueAttributes;
+
+        var reg = new RegExp('{{'+element+'}}');
+    
+        if (templat.includes(element) && element == 'html') {
+            valueAttributes = tag.text();
+            templat = templat.replace(reg, valueAttributes);
+        } else if(templat.includes(element)) {
+            valueAttributes = tag.attr(element);
+            templat = templat.replace(reg, valueAttributes);
+        } 
+    });        
+
+    return templat;
+}
+
+/*
 function Templater() {
     
-    var tags = {};
-
+    var tags = {};    
+    
     this.run = function() {
         for (var key in tags) {
             var tagList = document.body.querySelectorAll(key);
@@ -37,7 +70,7 @@ function Templater() {
 }
 
 var templater = new Templater();
-
+*/
 
             
         
