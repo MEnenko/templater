@@ -7,34 +7,32 @@
         
     </head>
     <body>
-      
-        <section id="bootstrap-templates">            
-            <bootstrapbutton type="submit" class="some-class">
-                Bootstrap Button 3
-            </bootstrapbutton>
-            <bootstrapbuttongrup></bootstrapbuttongrup>
-        </section>
-        <section id="foundation-templates">
-            <bootstrapbutton type="submit" class="some-class">
-              Foundation Button
-            </bootstrapbutton>
-        </section>
+        <panel heading="Outer Panel">
+            <div>Some outer content</div>
+            <panel heading="Inner Panel">
+                <div>Some Inner content</div>
+            </panel>
+        </panel>
+        <div class="panel">
+                <div class="panel-heading">Outer Panel</div>
+                <div class="panel-body">
+                    <div>Some outer content</div>
+                    <div class="panel">
+                        <div class="panel-heading">Inner Panel</div>
+                        <div class="panel-body">
+                            <div>Some Inner content</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
 
         <script>     
-            
-            
-            $('#bootstrap-templates').templater({
+            $(document).templater({
                 tags: {
-                    'bootstrapbutton': '<button class="btn btn-default {{class}}" type="{{type}}">{{html}}</button>',
-                    'bootstrapbuttongrup': '<bootstrapbutton>Button 1</bootstrapbutton><bootstrapbutton>Button 2</bootstrapbutton>'
+                'panel': '<div class="panel"><div class="panel-heading">{{heading}}</div><div class="panel-body">{{html}}</div></div>'
                 }
-            });      
-            
-            $('#foundation-templates').templater({
-                tags: {
-                    'bootstrapbutton': '<button class="button {{class}}" type="{{type}}">{{html}}</button>'
-                }
-            });  
+            }); 
         </script>        
 
     </body>
