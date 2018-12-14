@@ -1,8 +1,9 @@
-(function() {
-	$.fn.templater = function(options) {
+
+$.fn.templater = function(options) {
 		var tags = {};
 		$.extend(tags, options.tags);
-        var collection = $(this);        
+        var collection = $(this);    
+          
         while(isCheckCustomTags(collection, tags)) {            
             for (var key in tags) {
                 collection.find(key).each(function() {
@@ -12,8 +13,8 @@
             }
         }
     }      
-
-	function render(tag, template) {
+    
+    function render(tag, template) {
         attributes = getAttributesTags(template);
         if (attributes) {
             attributes.forEach(function(attribute) {
@@ -22,16 +23,20 @@
                 if (!template.includes(attribute)) {
                     return;
                 }
-                if (attribute == 'html') {
-                    value = tag.html();
-                } else {
-                    value = tag.attr(attribute) || '';
-                }
+                value = getValueAttribute(attribute, tag)
                 template = getTemplateWithReplacedAttribute(template, reg, value);
             });
         }
 		return template;
 	}
+
+    function getValueAttribute(attribute, tag, value) {
+        if (attribute == 'html') {
+            return tag.html();
+        } else {
+            return tag.attr(attribute) || '';
+        }
+    }
 
 	function getAttributesTags(template) {
         return template.match(/[^{}]+(?=})/g);
@@ -52,5 +57,4 @@
 
 	function getRegExp(attribute) {
 		return (new RegExp('{{' + attribute + '}}'));
-	}
-})()
+    }
