@@ -1,19 +1,18 @@
 
-$.fn.templater = function(options) {
-		var tags = {};
-		$.extend(tags, options.tags);
-        var collection = $(this);    
-          
-        while(isCheckCustomTags(collection, tags)) {            
+function Templater() {
+    var tags = {};
+
+    this.run = function() {
+        while (isCheckCustomTags(tags)) {
             for (var key in tags) {
-                collection.find(key).each(function() {
-                    var tag = $(this);
-                    tag.replaceWith(render(tag, tags[key]))
-                });
-            }
+                var tagList = document.body.querySelectorAll(key);
+                for (tag of tagList) {
+                    tag.outerHTML = render(tag, tags[key]);  
+                }                      
+            } 
         }
-    }      
-    
+    }    
+
     function render(tag, template) {
         attributes = getAttributesTags(template);
         if (attributes) {
@@ -28,13 +27,17 @@ $.fn.templater = function(options) {
             });
         }
 		return template;
-	}
+    }
+
+    this.addTag = function(tag, templat) {
+        tags[tag] = templat;        
+    } 
 
     function getValueAttribute(attribute, tag, value) {
         if (attribute == 'html') {
-            return tag.html();
+            return tag.innerHTML;
         } else {
-            return tag.attr(attribute) || '';
+            return tag.getAttribute(attribute) || '';
         }
     }
 
@@ -42,9 +45,9 @@ $.fn.templater = function(options) {
         return template.match(/[^{}]+(?=})/g);
     }
 
-    function isCheckCustomTags(collection, tags) {
-        for (var tag in tags) {
-            if (collection.find(tag).length > 0) {
+    function isCheckCustomTags(tags) {
+        for (var key in tags) {
+            if (document.body.querySelectorAll(key).length > 0) {
                 return true;
             }
         }
@@ -57,4 +60,9 @@ $.fn.templater = function(options) {
 
 	function getRegExp(attribute) {
 		return (new RegExp('{{' + attribute + '}}'));
-    }
+    }    
+}
+var templater = new Templater();
+
+
+    
