@@ -2,13 +2,12 @@
 
 function Templater(wrapper) {
     var tags = {};
-
     if (!wrapper) {
         wrapper = document.body;
     } 
 
     this.run = function() {
-        while (isCustomTagsExists(tags)) {
+        while (isCustomTagsExists(tags, wrapper)) {
             for (var key in tags) {
                 var tagList = wrapper.querySelectorAll(key);
 
@@ -52,9 +51,9 @@ function Templater(wrapper) {
         return template.match(/[^{}]+(?=})/g) || [];
     }
 
-    function isCustomTagsExists(tags) {
+    function isCustomTagsExists(tags, wrapper) {
         for (var key in tags) {
-            if (document.body.querySelectorAll(key).length > 0) {
+            if (wrapper.querySelectorAll(key).length > 0) {
                 return true;
             }
         }
@@ -69,6 +68,10 @@ function Templater(wrapper) {
 	function getAttributeSelectRegExp(attribute) {
 		return (new RegExp('{{' + attribute + '}}'));
     }    
+}
+
+if (typeof module !== 'undefined') {
+    module.exports = Templater;
 }
 
 
